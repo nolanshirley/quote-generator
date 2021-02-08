@@ -40,11 +40,25 @@ function newQuote () {
     } else {
         quoteText.classList.remove('long-quote');
     }
-    
+
     // Set Quote, Hide Loader
     quoteText.textContent = quote.text; 
     complete(); 
 }
+
+//Solving CORS errors from external APIs requires a proxyURL which is now in my herokuapp, the enigmatic one, see below how to use it 
+/*
+async function getQuotes() {
+    const proxyUrl = 'https://enigmatic-meadow-43212.herokuapp.com/';
+    const apiUrl = 'https://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json';
+    try {
+        const response = await fetch(proxyUrl + apiUrl); 
+        const data = await response.json(); 
+        console.log(data); 
+    }
+}
+*/
+
 
 
 async function getQuotes () {
