@@ -13,20 +13,20 @@ const loader = document.getElementById('loader');
 let apiQuotes = []; // using a let variable because the values inside of the array will change 
 
 // Show Loading 
-function loading() {
+function showLoadingSpinner() {
     loader.hidden = false; 
     quoteContainer.hidden = true; 
 }
 
 // Hide Loading
-function complete() {
+function removeLoadingSpinner() {
     quoteContainer.hidden = false; 
     loader.hidden = true; 
 }
 
 //Show New Quote
 function newQuote () {
-    loading(); 
+    showLoadingSpinner(); 
     const quote = apiQuotes[Math.floor(Math.random() * apiQuotes.length)]; 
     // Check if author field is blank and replace with 'Unknown'
     if(!quote.author) {
@@ -43,7 +43,7 @@ function newQuote () {
 
     // Set Quote, Hide Loader
     quoteText.textContent = quote.text; 
-    complete(); 
+    removeLoadingSpinner(); 
 }
 
 //Solving CORS errors from external APIs requires a proxyURL which is now in my herokuapp, the enigmatic one, see below how to use it 
@@ -55,6 +55,8 @@ async function getQuotes() {
         const response = await fetch(proxyUrl + apiUrl); 
         const data = await response.json(); 
         console.log(data); 
+    } catch (error) {
+        getQuote(); // this is a recursive function, and if there is an error it will be infinitely looped as an error
     }
 }
 */
@@ -62,7 +64,7 @@ async function getQuotes() {
 
 
 async function getQuotes () {
-    loading(); 
+    showLoadingSpinner(); 
     const apiUrl = 'https://type.fit/api/quotes'; 
     try {
         const response = await fetch(apiUrl); 
